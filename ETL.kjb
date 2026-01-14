@@ -454,7 +454,7 @@
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>Transformation</name>
+      <name>Transform &amp; Load</name>
       <description/>
       <type>TRANS</type>
       <attributes/>
@@ -514,7 +514,7 @@
     </hop>
     <hop>
       <from>Extract into Staging</from>
-      <to>Transformation</to>
+      <to>Transform &amp; Load</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>

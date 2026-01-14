@@ -34,24 +34,6 @@ CREATE TABLE sales_raw (
     process_timestamp TIMESTAMP NULL
 );
 
-USE staging_db;
-
-CREATE TABLE test_staging (
-    order_id VARCHAR(20),
-    customer_name VARCHAR(100),
-    city VARCHAR(50),
-    email VARCHAR(100),
-    product_name VARCHAR(100),
-    product_category VARCHAR(50),
-    sale_date DATE,
-    quantity INT,
-    unit_price DECIMAL(10,2),
-    load_timestamp TIMESTAMP,
-    is_processed BOOLEAN DEFAULT FALSE,
-    process_timestamp TIMESTAMP NULL,
-    total_amount DECIMAL(10,2)
-);
-
 USE source_db;
 
 INSERT INTO source_db.sales_raw (
@@ -84,6 +66,25 @@ INSERT INTO source_db.sales_raw (
   ('ORD037', 'Serin dew', 'Delhi', 'john.rough@email.com', 'Laptop', 'Electronics', '2023-05-17', 1, 1300.00, '2023-05-17 09:30:00'),
   ('ORD089', 'Mike Brown', 'Brooklyn', 'mike.b@email.com', 'Wireless Earbuds', 'Electronics', '2025-05-20', 2, 129.99, '2025-05-20 14:22:00'),
   ('ORD090', 'Raj Deen', 'NY', 'raj.d@email.com', 'Wireless Earbuds', 'Electronics', '2025-05-21', 2, 139.99, '2025-05-21 14:22:00');
+  
+  
+USE staging_db;
+
+CREATE TABLE test_staging (
+    order_id VARCHAR(20),
+    customer_name VARCHAR(100),
+    city VARCHAR(50),
+    email VARCHAR(100),
+    product_name VARCHAR(100),
+    product_category VARCHAR(50),
+    sale_date DATE,
+    quantity INT,
+    unit_price DECIMAL(10,2),
+    load_timestamp TIMESTAMP,
+    is_processed BOOLEAN DEFAULT FALSE,
+    process_timestamp TIMESTAMP NULL,
+    total_amount DECIMAL(10,2)
+);
   
 CREATE DATABASE IF NOT EXISTS dw_db;
 
