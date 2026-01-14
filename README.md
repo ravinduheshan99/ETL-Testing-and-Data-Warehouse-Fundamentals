@@ -317,3 +317,286 @@ ETL testing examples:
 - Verify correct joins between fact and dimension tables
 
 ![Real World Teaching Analogy](https://github.com/ravinduheshan99/ETL-Testing-and-Data-Warehouse-Fundamentals/blob/main/resources/9-iii.png)
+
+### 10. ETL Project Planning and Business Rule Definition
+
+Before building the ETL pipeline, the overall flow and business logic must be clearly defined.
+
+Key planning steps:
+- Identify source systems (MySQL databases, CSV files)
+- Define staging layer tables
+- Understand transformation rules based on business needs
+- Map source attributes to warehouse targets
+- Identify keys for deduplication and delta processing
+
+Typical ETL layers:
+- Source
+- Staging
+- Transformation
+- Data Warehouse (Dimensions and Facts)
+
+ETL testing insight:  
+Most data defects originate from misunderstood business rules rather than technical failures.
+
+---
+
+### 11. Prerequisite Data Setup
+
+Source data setup included:
+- MySQL database tables loaded with transactional data
+- CSV files used as flat file sources
+
+![Real World Teaching Analogy](https://github.com/ravinduheshan99/ETL-Testing-and-Data-Warehouse-Fundamentals/blob/main/resources/11-i.png)
+
+![Real World Teaching Analogy](https://github.com/ravinduheshan99/ETL-Testing-and-Data-Warehouse-Fundamentals/blob/main/resources/11-ii.png)
+
+![Real World Teaching Analogy](https://github.com/ravinduheshan99/ETL-Testing-and-Data-Warehouse-Fundamentals/blob/main/resources/11-iii.png)
+
+Validation checks performed:
+- Row count verification
+- Primary and business key validation
+- Data type and nullability checks
+- File format and delimiter validation for CSV files
+
+A stable and validated source setup is critical for meaningful ETL testing.
+
+---
+
+### 12. Pentaho Data Integration (PDI) Tool Setup
+
+Pentaho Data Integration was used to build and execute the ETL pipeline.
+
+Key artifacts created:
+- Database connections
+- Transformations for extraction, transformation, and loading
+- Jobs for orchestration and execution control
+
+Core concepts:
+- Transformations handle row-level data processing
+- Jobs manage workflow sequencing and dependencies
+
+ETL testers must understand the data flow within transformations to identify defect root causes.
+
+---
+
+### 13. Extraction Using Pentaho Transformations and Jobs
+
+![Real World Teaching Analogy](https://github.com/ravinduheshan99/ETL-Testing-and-Data-Warehouse-Fundamentals/blob/main/resources/13-i.png)
+
+Data extraction was performed from:
+- MySQL source tables
+- CSV flat files
+
+Extraction strategies:
+- Initial full load
+- Incremental (delta) load based on updated records
+
+Delta detection methods:
+- Last updated timestamp
+- Change indicators
+- Key-based comparison
+
+---
+
+### 14. Staging Layer Loading and Testing
+
+![Real World Teaching Analogy](https://github.com/ravinduheshan99/ETL-Testing-and-Data-Warehouse-Fundamentals/blob/main/resources/14-i.png)
+
+Extracted data was loaded into staging tables for consolidation.
+
+Staging validations:
+- Source-to-staging row count comparison
+- Duplicate record detection
+- Null checks on mandatory columns
+- Data type and format consistency
+
+Staging acts as the first checkpoint for data quality issues.
+
+---
+
+### 15. CSV Extraction Scenarios
+
+![Real World Teaching Analogy](https://github.com/ravinduheshan99/ETL-Testing-and-Data-Warehouse-Fundamentals/blob/main/resources/15-i.png)
+
+The following extraction scenarios were tested:
+1. Initial full load
+2. Incremental append
+3. Updated record reload
+4. No-change extraction
+
+Validation ensured:
+- No duplicate ingestion
+- Correct handling of headers and delimiters
+- Accurate incremental behavior
+
+---
+
+### 16. Transformation Objectives
+
+Transformation logic was applied to:
+- Improve data quality
+- Standardize values
+- Apply business rules
+- Prepare data for dimensional modeling
+
+---
+
+### 17. Transformation Logic Implemented
+
+**Logic 1: Deduplication**
+- Filtered unique records using business keys  
+Validation: Only one record per key exists.
+
+**Logic 2: Value Mapping**
+- Standardized inconsistent values using JavaScript steps  
+Validation: Mapped values match expected domain values.
+
+**Logic 3: Conditional Updates**
+- Updated records based on business conditions  
+Validation: Only eligible records were modified.
+
+**Logic 4: Calculations and Derived Fields**
+- Generated calculated metrics and derived columns  
+Validation: SQL recalculations matched ETL results.
+
+![Real World Teaching Analogy](https://github.com/ravinduheshan99/ETL-Testing-and-Data-Warehouse-Fundamentals/blob/main/resources/17-i.png)
+
+---
+
+### 18. Transformation Testing Using SQL
+
+Transformation testing included:
+- Row-level validation
+- Aggregate reconciliation
+- Boundary and null value checks
+- Business rule verification
+
+Transformation defects are the most common cause of incorrect analytics.
+
+---
+
+### 19. Data Warehouse Schema Creation
+
+Warehouse tables were created using a star schema design:
+- Dimension tables
+- Fact tables
+
+Key considerations:
+- Surrogate keys
+- Referential integrity
+- Query performance optimization
+
+---
+
+### 20. Dimension Table Loading
+
+Dimension loading included:
+- Inserting new records
+- Updating existing records
+- Preparing for Slowly Changing Dimensions
+
+Validation checks:
+- No duplicate dimension records
+- Correct surrogate key assignment
+
+---
+
+### 21. Fact Table Loading
+
+Fact tables were populated by joining dimension tables.
+
+Validation checks:
+- No orphan foreign keys
+- Correct metric calculations
+- Correct data grain
+
+---
+
+### 22. End-to-End ETL Job Execution
+
+![Real World Teaching Analogy](https://github.com/ravinduheshan99/ETL-Testing-and-Data-Warehouse-Fundamentals/blob/main/resources/22-i.png)
+
+The complete ETL flow was executed as a single job:
+- Extract → Stage → Transform → Load
+
+Testing focused on:
+- Job execution status
+- Error handling
+- Data completeness across all layers
+
+---
+
+### 23. ETL Testing Types Covered
+
+**Delta Testing**
+- Validate incremental loads
+- Ensure only new or updated records are processed
+
+**Transformation Testing**
+- Verify all business rules and data quality logic
+
+**Functional End-to-End Testing**
+- Confirm records flow from source systems to fact tables
+
+**Data Consistency Testing**
+- Compare counts and aggregates across Source, Staging, and Warehouse
+
+**Referential Integrity Testing**
+- Validate Fact–Dimension relationships
+- Ensure no orphan records exist
+
+---
+
+### 24. SQL Validation Patterns Used
+
+- Source vs target count comparison
+- Minus queries for data reconciliation
+- Aggregate comparisons
+- Join-based referential integrity checks
+
+Effective ETL testing always includes both row-level and summary-level validation.
+
+---
+
+## Section 8: Slowly Changing Dimensions (SCD)
+
+### 25. Understanding Slowly Changing Dimensions
+
+Slowly Changing Dimensions handle attribute changes over time.
+
+Examples:
+- Customer address changes
+- Product category updates
+- Employee role changes
+
+---
+
+### 26. SCD Types Implemented and Tested
+
+**SCD Type 1**
+- Overwrites existing data
+- No history preserved
+
+Test scenarios:
+- Old values replaced correctly
+- No duplicate dimension records
+
+**SCD Type 2**
+- Preserves historical records
+- Uses effective dates and active flags
+
+Test scenarios:
+- Previous records marked inactive
+- New records inserted with updated values
+- Correct effective date ranges maintained
+
+---
+
+### 27. SCD Testing Focus Areas
+
+- Historical data accuracy
+- Active record uniqueness
+- Surrogate key integrity
+- Date range validation
+
+SCD testing is one of the most critical areas in ETL projects due to its complexity and business impact.
