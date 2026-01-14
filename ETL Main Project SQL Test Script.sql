@@ -53,6 +53,7 @@ LEFT JOIN dw_db.dim_customer c ON f.customer_key = c.customer_key
 LEFT JOIN dw_db.dim_product p ON f.product_key = p.product_key
 WHERE c.customer_key IS NULL OR p.product_key IS NULL;
 
+-- As a pre-requisites update city for any email id - (dimension table, email - 1 records)
 SELECT COUNT(*)
 FROM dw_db.dim_customer 
 WHERE email = 'mike.b@email.com'
