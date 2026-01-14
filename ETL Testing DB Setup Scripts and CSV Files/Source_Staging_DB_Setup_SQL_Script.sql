@@ -48,7 +48,8 @@ CREATE TABLE test_staging (
     unit_price DECIMAL(10,2),
     load_timestamp TIMESTAMP,
     is_processed BOOLEAN DEFAULT FALSE,
-    process_timestamp TIMESTAMP NULL
+    process_timestamp TIMESTAMP NULL,
+    total_amount DECIMAL(10,2)
 );
 
 USE source_db;
@@ -118,24 +119,3 @@ CREATE TABLE fact_sales (
     FOREIGN KEY (customer_key) REFERENCES dim_customer(customer_key),
     FOREIGN KEY (product_key) REFERENCES dim_product(product_key)
 );
-
--- INSERT INTO dw_db.fact_sales (
---     customer_key,
---     product_key,
---     order_id,
---     quantity,
---     unit_price,
---     total_amount,
---     sale_date,
---     load_timestamp
--- )
--- VALUES (
---     99,                          -- customer_key (must exist in dim_customer)
---     99,                          -- product_key (must exist in dim_product)
---     'ORD001',                   -- order_id
---     2,                          -- quantity
---     99.99,                      -- unit_price
---     199.98,                     -- total_amount (quantity * unit_price)
---     '2025-06-01',               -- sale_date
---     '2025-06-01 10:30:00'       -- load_timestamp
--- );
